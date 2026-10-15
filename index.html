@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>20/10 with A3 💗</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Dancing+Script:wght@600;700&family=Lora:ital,wght@0,500;1,500&display=swap&subset=vietnamese" rel="stylesheet"><link rel="stylesheet" href="style.css"></head>
+<body>
+<div id="bg"></div><div id="fx"></div><nav id="map" hidden></nav>
+<main>
+<section class="scene" id="intro">
+ <div class="env" id="envIntro"><div class="flap"></div><span>💌</span></div>
+ <p class="big">Có một món quà nhỏ đang chờ bạn...</p>
+ <p>Bạn có muốn bắt đầu hành trình 20/10 không?</p>
+ <button class="btn" id="startBtn">Bắt đầu hành trình ✨</button>
+</section>
+<section class="scene" id="login">
+ <form id="form" class="card" autocomplete="off">
+  <h2>Bạn là ai nhỉ? 🌷</h2>
+  <label for="uName">Họ và tên</label><input id="uName" placeholder="Ví dụ: Nguyễn Văn A" required>
+  <label for="uPw">Ngày sinh (DDMM)</label><input id="uPw" inputmode="numeric" maxlength="4" placeholder="Ví dụ: 0105" required>
+  <p id="err" role="alert"></p>
+  <button class="btn" type="submit">Mở món quà 💗</button>
+ </form>
+</section>
+<section class="scene" id="map0"><h2 id="hello"></h2><p>Hành trình có 10 chặng nhỏ, bạn cứ thong thả đi nhé.</p><button class="btn" data-go="garden">Đi thôi 🌱</button></section>
+<section class="scene" id="garden"><h2>Khu vườn lời chúc 🌷</h2><p>Chạm vào bông hoa đang lay động nhé.</p>
+ <button id="flower" aria-label="Bông hoa">🌸</button><p id="wishTxt" class="big"></p>
+ <div class="row"><button class="btn" id="gNext" data-go="memory" hidden>Tiếp tục 📸</button><button class="link" data-go="memory">Bỏ qua</button></div></section>
+<section class="scene" id="memory"><h2>Con đường ký ức 📸</h2>
+ <div id="polaWrap"></div><p id="cap" class="cap"></p><small id="cnt"></small><button class="btn" id="mNext">Khám phá tiếp</button></section>
+<section class="scene" id="heart"><h2>Trái tim bí mật 💗</h2><p>Hãy tìm trái tim sáng lấp lánh nhất ✨ </p>
+ <div id="field"></div><p id="hMsg" class="big"></p><button class="btn" id="hNext" data-go="gift" hidden>Tiếp tục 🎁</button></section>
+<section class="scene" id="gift"><h2>Hộp quà 20/10 🎁</h2>
+ <div id="box"><div class="lid"></div><div class="bx"></div><div class="glow"></div></div>
+ <p id="gTxt" class="big"></p><button class="btn" id="gOpen">Mở quà</button><button class="btn" id="gfNext" data-go="wish" hidden>Tiếp tục ✨</button></section>
+<section class="scene" id="wish"><div id="lines" class="card"></div><button class="btn" id="wNext">Đọc tiếp</button></section>
+<section class="scene" id="letter"><h2>Lá thư bí mật 💌</h2>
+ <button id="env" class="env" aria-label="Mở thư"><div class="flap"></div><span>💌</span></button>
+ <div id="paper" class="card paper" hidden><div id="lt"></div><div id="pics"></div></div><button class="btn" id="lNext" data-go="end" hidden>Tiếp tục 🌷</button></section>
+<section class="scene" id="end"><h2>Bạn đã hoàn thành hành trình 🌷</h2><p id="endTxt" class="big"></p>
+ <div class="row"><button class="btn" id="replay">Xem lại món quà</button><button class="btn alt" id="restart">Bắt đầu lại</button></div></section>
+</main>
+<button id="fxBtn" aria-label="Bật/tắt hiệu ứng" title="Bật/tắt hiệu ứng">✨</button>
+<div id="hint" hidden></div>
+<div id="lb" hidden><img alt=""></div>
+<script src="script.js"></script></body></html>
