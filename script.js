@@ -211,8 +211,11 @@ const init = {
       $("#cnt").textContent = `${pages.slice(0, i + 1).flat().length} / ${SHARED.length}`;
       preload(i + 1);
     };
-    setTap(() => { if (i + 1 < pages.length) { i++; show(); } else go("heart"); }, "Chạm để xem tiếp 📸");
-    show();
+    const prev = $("#mPrev"), next = $("#mNext");
+    const sync = () => { prev.disabled = i === 0; next.textContent = i + 1 < pages.length ? "Xem tiếp ▶" : "Tiếp tục 💗"; };
+    prev.onclick = () => { if (i > 0) { i--; sync(); show(); } };
+    next.onclick = () => { if (i + 1 < pages.length) { i++; sync(); show(); } else go("heart"); };
+    sync(); show();
   },
   heart() {
     const f = $("#field"); f.innerHTML = ""; $("#hMsg").textContent = ""; $("#hNext").hidden = true;

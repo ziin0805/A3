@@ -110,7 +110,7 @@ main{max-width:760px}
 @media(max-width:420px){#paper{padding:20px 14px;gap:12px;font-size:.95rem;line-height:1.8rem}#pics{flex-basis:40%}}
 
 /* chạm màn hình để tiếp tục: ẩn các nút rườm rà */
-#startBtn,#map0 .btn,#garden .btn,#garden .link,#memory .btn,#heart .btn,#gOpen,#gfNext,#wNext,#lNext{display:none!important}
+#startBtn,#map0 .btn,#garden .btn,#garden .link,#heart .btn,#gOpen,#gfNext,#wNext,#lNext{display:none!important}
 #hint{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:30;color:var(--muted);font-size:.9rem;background:#fffc;padding:8px 16px;border-radius:999px;white-space:nowrap;animation:breathe 2.8s ease-in-out infinite;pointer-events:none}
 @keyframes breathe{50%{opacity:.45}}
 body{cursor:default}
@@ -153,3 +153,7 @@ body{touch-action:manipulation}
 /* tách layer riêng cho phần tử chuyển động liên tục */
 #bg{contain:layout paint}
 #bg i,#bg b,#field button{will-change:transform}
+
+/* nút điều hướng Con đường ký ức */
+.btn:disabled{opacity:.4;cursor:default;box-shadow:none}.btn:disabled:hover{transform:none;box-shadow:none}
+#memory .row{margin-top:6px}
