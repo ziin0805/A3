@@ -158,6 +158,12 @@ async function ownPhotos() {
   }
   return out;
 }
+// nạp + giải mã toàn bộ ảnh (ảnh chung theo thứ tự, rồi ảnh riêng), 4 ảnh song song để không nghẽn máy
+function preloadAll() {
+  const list = [...SHARED, ...me.photos]; let k = 0;
+  const worker = async () => { while (k < list.length) await getImg(list[k++]); };
+  for (let w = 0; w < 4; w++) worker();
+}
 const first = () => me.call || me.name.split(" ").pop();
 
 // nền: cánh hoa trôi (số lượng cố định, CSS infinite)
@@ -211,7 +217,13 @@ const init = {
       $("#cnt").textContent = `${pages.slice(0, i + 1).flat().length} / ${SHARED.length}`;
       preload(i + 1);
     };
-    const prev = $("#mPrev"), next = $("#mNext");
+    let prev = $("#mPrev"); const next = $("#mNext");
+    if (!prev) { // phòng khi index.html cũ chưa có nút Quay lại
+      const row = document.createElement("div"); row.className = "row";
+      prev = document.createElement("button"); prev.id = "mPrev"; prev.className = "btn alt"; prev.textContent = "◀ Quay lại";
+      next.before(row); row.append(prev, next);
+    }
+    [prev, next].forEach(b => b.style.setProperty("display", "inline-block", "important")); // phòng khi style.css cũ còn ẩn nút
     const sync = () => { prev.disabled = i === 0; next.textContent = i + 1 < pages.length ? "Xem tiếp ▶" : "Tiếp tục 💗"; };
     prev.onclick = () => { if (i > 0) { i--; sync(); show(); } };
     next.onclick = () => { if (i + 1 < pages.length) { i++; sync(); show(); } else go("heart"); };
@@ -261,7 +273,7 @@ $("#form").onsubmit = e => {
   const n = flat($("#uName").value), p = $("#uPw").value.trim();
   const found = PEOPLE.find(x => flat(x.name) === n && x.pw === p);
   if (!found) { $("#err").textContent = "Tên hoặc ngày sinh chưa khớp, bạn thử lại nhé 🌷"; $("#form").classList.remove("shake"); void $("#form").offsetWidth; $("#form").classList.add("shake"); return; }
-  me = found; SHARED.slice(0, 5).forEach(getImg); confetti(30); // nạp sẵn ảnh của 2 trang đầu Con đường ký ức
+  me = found; preloadAll(); confetti(30); // nạp sẵn TOÀN BỘ ảnh ngay sau khi đăng nhập
   $("#err").textContent = `Xin chào ${me.name} 💗`;
   later(() => go("map0"), 900);
 };
