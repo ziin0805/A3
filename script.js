@@ -161,8 +161,9 @@ async function ownPhotos() {
 const first = () => me.call || me.name.split(" ").pop();
 
 // nền: cánh hoa trôi (số lượng cố định, CSS infinite)
+const LOW = (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4; // máy yếu -> bớt hạt nền
 if (CONFIG.effects) {
-  $("#bg").innerHTML = Array.from({ length: 10 }, () => `<i style="left:${Math.random() * 100}%;font-size:${14 + Math.random() * 14}px;animation-duration:${14 + Math.random() * 12}s;animation-delay:-${Math.random() * 20}s">${rnd(["🌸", "💗", "✨", "🌷"])}</i>`).join("") + Array.from({ length: 6 }, () => `<b style="left:${Math.random() * 100}%;top:${Math.random() * 100}%;animation-delay:-${Math.random() * 3}s"></b>`).join("");
+  $("#bg").innerHTML = Array.from({ length: LOW ? 5 : 10 }, () => `<i style="left:${Math.random() * 100}%;font-size:${14 + Math.random() * 14}px;animation-duration:${14 + Math.random() * 12}s;animation-delay:-${Math.random() * 20}s">${rnd(["🌸", "💗", "✨", "🌷"])}</i>`).join("") + Array.from({ length: LOW ? 3 : 6 }, () => `<b style="left:${Math.random() * 100}%;top:${Math.random() * 100}%;animation-delay:-${Math.random() * 3}s"></b>`).join("");
 }
 function confetti(n = 30, set = ["🎉", "🌸", "💗", "✨", "🌷"]) {
   return; // đã tắt hiệu ứng rơi xuống (confetti)
@@ -279,11 +280,13 @@ document.addEventListener("click", e => {
   tapFn();
 });
 // nhạc nền: nạp sẵn ngay khi mở web, thử phát luôn; nếu trình duyệt chặn thì phát ở lần chạm/bấm phím đầu tiên
+const MUSIC_EVS = ["pointerdown", "keydown", "touchend"];
 function startMusic() {
   if (!CONFIG.music.enabled) return;
-  if (!audio) { audio = new Audio(CONFIG.music.src); audio.loop = true; audio.volume = 0.6; audio.preload = "auto"; }
-  if (audio.paused) audio.play().catch(() => {});
+  if (!audio) { audio = new Audio(CONFIG.music.src); audio.loop = true; audio.volume = 0.6; audio.preload = "metadata"; }
+  const done = () => MUSIC_EVS.forEach(ev => removeEventListener(ev, startMusic));
+  if (audio.paused) audio.play().then(done, () => {}); else done();
 }
 startMusic();
-["pointerdown", "keydown", "touchend"].forEach(ev => addEventListener(ev, startMusic));
+MUSIC_EVS.forEach(ev => addEventListener(ev, startMusic));
 go("intro");
